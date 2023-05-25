@@ -74,7 +74,11 @@ train:
     type: CosineAnnealingRestartCyclicLR
     periods: [1, 1]
     restart_weights: [1,1]
-    eta_mins: [0.0003,0.000001]
+    # eta_mins: [0.0003,0.000001]
+
+    # @ a suitable learning rate for Lion is typically 3-10x smaller than that for AdamW.
+    # @ https://github.com/lucidrains/lion-pytorch
+    eta_mins: [0.00003,0.0000001]   
 
   mixing_augs:
     mixup: true
@@ -82,10 +86,19 @@ train:
     use_identity: true
 
   optim_g:
-    type: AdamW
+    # type: AdamW
+    type: lion
     lr: !!float 3e-4
-    weight_decay: !!float 1e-4
-    betas: [0.9, 0.999]
+    # weight_decay: !!float 1e-4
+    # betas: [0.9, 0.999]
+
+    # @ weight decay λ used for Lion is 3-10x larger than that for AdamW.
+    # @ https://github.com/lucidrains/lion-pytorch
+    weight_decay: !!float 1e-3
+
+    # @ in Lion, the default values for β1 and β2 are set as 0.9 and 0.99.
+    betas: [0.9, 0.99]
+    
 
   # losses
   pixel_opt:

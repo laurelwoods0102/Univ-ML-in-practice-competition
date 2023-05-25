@@ -128,6 +128,11 @@ class ImageCleanModel(BaseModel):
             self.optimizer_g = torch.optim.Adam(optim_params, **train_opt['optim_g'])
         elif optim_type == 'AdamW':
             self.optimizer_g = torch.optim.AdamW(optim_params, **train_opt['optim_g'])
+        elif optim_type == 'lion':  # @ 
+            # @ From:
+            # @ https://github.com/lucidrains/lion-pytorch
+            from lion_pytorch import Lion
+            self.optimizer_g = Lion(optim_params, **train_opt['optim_g'])
         else:
             raise NotImplementedError(
                 f'optimizer {optim_type} is not supperted yet.')
