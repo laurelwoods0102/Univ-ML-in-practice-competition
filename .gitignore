@@ -1,7 +1,7 @@
 *.zip
 *.tif
 tb_logger
-
+results
 
 .vscode
 
